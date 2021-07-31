@@ -105,3 +105,6 @@ dist
 
 # secret file
 .secret 
+
+# Local Netlify folder
+.netlify
