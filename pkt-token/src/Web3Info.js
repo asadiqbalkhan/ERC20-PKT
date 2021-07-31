@@ -1,18 +1,36 @@
-import React, { useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
-const Web3Info = (props) => {
+
+export default function Web3Info(props) {
   const { web3Context } = props;
-  const { networkId, networkName, accounts, providerName } = web3Context;
+  const { networkId, networkName, accounts, providerName, lib, contract } =
+    web3Context;
+
+  const [balance, setBalance] = useState(0);
+
+  const getBalance = useCallback(async () => {
+    let balance =
+      accounts && accounts.length > 0
+        ? lib.utils.fromWei(await lib.eth.getBalance(accounts[0]), "ether")
+        : "Unknown";
+    setBalance(balance);
+  }, [accounts, lib.eth, lib.utils]);
+
+  useEffect(() => {
+    getBalance();
+  }, [accounts, getBalance, networkId]);
 
   const requestAuth = async (web3Context) => {
     try {
       await web3Context.requestAuth();
+      // ends here
     } catch (e) {
       console.error(e);
     }
   };
 
-  const requestAccess = useCallback(() => requestAuth(web3Context, []));
+  const requestAccess = useCallback(() => requestAuth(web3Context), []);
+
   return (
     <div>
       <h3> {props.title} </h3>
@@ -22,6 +40,7 @@ const Web3Info = (props) => {
       <div>
         Your address: {accounts && accounts.length ? accounts[0] : "Unknown"}
       </div>
+      <div>Your ETH balance: {balance}</div>
       <div>Provider: {providerName}</div>
       {accounts && accounts.length ? (
         <div>Accounts & Signing Status: Access Granted</div>
@@ -34,6 +53,4 @@ const Web3Info = (props) => {
       )}
     </div>
   );
-};
-
-export default Web3Info;
+}
