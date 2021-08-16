@@ -3,7 +3,7 @@ import React, { useState, useEffect, useCallback } from "react";
 
 export default function Web3Info(props) {
   const { web3Context } = props;
-  const { networkId, networkName, accounts, providerName, lib, contract } =
+  const { networkId, networkName, accounts, providerName, lib } =
     web3Context;
 
   const [balance, setBalance] = useState(0);

@@ -13,7 +13,7 @@ function App() {
   // const web3Context = useWeb3(
   //   `https://ropsten.infura.io/v3/${infuraProjectId}`
   // );
-  // 0xa5aFEe78e75EBaffdEE9Dcc2829bCf4cACA44463
+  // // 0xa5aFEe78e75EBaffdEE9Dcc2829bCf4cACA44463
   // const { networkId, networkName, account, providerName } = web3Context;
 
   const contract = new Contract(
